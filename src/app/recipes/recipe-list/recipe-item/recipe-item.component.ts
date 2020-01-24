@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
-import { SelectorContext } from '@angular/compiler';
+import { Component, Input } from "@angular/core";
+import { SelectorContext } from "@angular/compiler";
+import { Recipe } from "../../recipes.model";
 
 @Component({
   selector: "app-recipe-item",
@@ -7,5 +8,5 @@ import { SelectorContext } from '@angular/compiler';
   styleUrls: ["recipe-item.component.scss"]
 })
 export class RecipeItemComponent {
-
-} 
+  @Input() recipe: Recipe;
+}

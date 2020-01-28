@@ -7,9 +7,9 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
   title = "recipes";
-  navigate: string = "";
-  setNav(navString) {
-    this.navigate = navString;
-    console.log(this.navigate);
+  loadedFeature: string = "recipes";
+  onNavigate(navString: string): void {
+    this.loadedFeature = navString;
+    console.log(this.loadedFeature);
   }
 }

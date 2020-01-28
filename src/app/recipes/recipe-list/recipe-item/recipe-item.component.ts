@@ -1,7 +1,5 @@
-import { Component, Input } from "@angular/core";
-import { SelectorContext } from "@angular/compiler";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { Recipe } from "../../recipes.model";
-
 @Component({
   selector: "app-recipe-item",
   templateUrl: "recipe-item.component.html",
@@ -9,4 +7,9 @@ import { Recipe } from "../../recipes.model";
 })
 export class RecipeItemComponent {
   @Input() recipe: Recipe;
+  @Output() recipeSelected = new EventEmitter<void>();
+
+  onSelected() {
+    this.recipeSelected.emit();
+  }
 }

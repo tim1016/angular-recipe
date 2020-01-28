@@ -1,41 +1,40 @@
-<div class="row">
-  <div class="col-xs-12">
-    <img src="" alt="" class="img-responsive" />
-  </div>
+<div class="col">
+  <img
+    [src]="recipe.imagePath"
+    alt=""
+    class="img-responsive"
+    style="max-height: 300px"
+  />
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <h1>Recipe Name</h1>
-  </div>
+
+<div class="col">
+  <h1>{{ recipe.name }}</h1>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="dropdown">
-      <button
-        class="btn btn-secondary dropdown-toggle"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        Manage recipe
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li><a class="dropdown-item" href="#">To shopping list</a></li>
-        <a class="dropdown-item" href="#">Edit recipe</a>
-        <a class="dropdown-item" href="#">Delete recipe</a>
-      </div>
+
+<div class="col">
+  <div class="dropdown">
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      id="dropdownMenuButton"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      Manage recipe
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <li><a class="dropdown-item" href="#">To shopping list</a></li>
+      <a class="dropdown-item" href="#">Edit recipe</a>
+      <a class="dropdown-item" href="#">Delete recipe</a>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    Description
-  </div>
+
+<div class="col">
+  Description
 </div>
-<div class="row">
-  <div class="col-xs-12">
-    Ingredients
-  </div>
+
+<div class="col">
+  Ingredients
 </div>

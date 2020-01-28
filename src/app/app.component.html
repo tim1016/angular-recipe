@@ -1,9 +1,15 @@
-<div class="container bg-light">
-  <app-header></app-header>
-  <div class="row pt-2">
-    <div class="col-md-12">
-      <app-recipes></app-recipes>
-      <app-shopping-list></app-shopping-list>
+<div class="container">
+  <app-header (navigate)="setNav($event)"></app-header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <app-recipes
+          *ngIf="navigate === 'recipes' || navigate === ''"
+        ></app-recipes>
+        <app-shopping-list
+          *ngIf="navigate === 'shopping' || navigate === ''"
+        ></app-shopping-list>
+      </div>
     </div>
   </div>
 </div>

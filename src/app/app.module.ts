@@ -20,7 +20,6 @@ import { ShoppingService } from "./shopping-list/Shopping.service";
   declarations: [
     AppComponent,
     HeaderComponent,
-    // ShoppingComponent,
     RecipesComponent,
     RecipeListComponent,
     RecipeDetailsComponent,

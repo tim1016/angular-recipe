@@ -9,6 +9,7 @@ import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 export class HeaderComponent implements OnInit {
   @Output() featureSelected = new EventEmitter<string>();
   navString: string = "";
+  showDropdown = false;
   constructor() {}
 
   ngOnInit() {}

@@ -14,8 +14,8 @@ import { Ingredient } from "../../shared/ingredient.model";
   styleUrls: ["./shopping-edit.component.scss"]
 })
 export class ShoppingEditComponent implements OnInit {
-  @ViewChild("nameInput", { static: false }) ingredientName: ElementRef;
-  @ViewChild("amountInput", { static: false }) ingredientAmount: ElementRef;
+  @ViewChild("nameInput", { static: false }) nameInputRef: ElementRef;
+  @ViewChild("amountInput", { static: false }) amountInputRef: ElementRef;
   @Output() ingredientAdded = new EventEmitter<Ingredient>();
   newIngredient: Ingredient;
   constructor() {}
@@ -23,8 +23,8 @@ export class ShoppingEditComponent implements OnInit {
 
   addIngredient() {
     this.newIngredient = new Ingredient(
-      this.ingredientName.nativeElement.value,
-      this.ingredientAmount.nativeElement.value
+      this.nameInputRef.nativeElement.value,
+      this.amountInputRef.nativeElement.value
     );
     this.ingredientAdded.emit(this.newIngredient);
   }

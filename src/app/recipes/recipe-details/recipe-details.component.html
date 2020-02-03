@@ -29,7 +29,15 @@
       aria-labelledby="dropdownMenuButton"
       [ngClass]="{ show: showDropdown }"
     >
-      <li><a class="dropdown-item" href="#">To shopping list</a></li>
+      <li>
+        <a
+          class="dropdown-item"
+          href="#"
+          (click)="toShoppingList()"
+          style="cursor:pointer"
+          >To shopping list</a
+        >
+      </li>
       <a class="dropdown-item" href="#">Edit recipe</a>
       <a class="dropdown-item" href="#">Delete recipe</a>
     </div>

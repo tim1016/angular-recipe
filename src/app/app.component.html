@@ -1,4 +1,6 @@
 <div class="container">
-  <app-header (featureSelected)="onNavigate($event)"></app-header>
-  <router-outlet></router-outlet>
+  <app-header></app-header>
+  <div class="row">
+    <div class="col"><router-outlet></router-outlet></div>
+  </div>
 </div>

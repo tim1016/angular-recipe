@@ -9,22 +9,14 @@ import { Subscription } from "rxjs";
   styleUrls: ["recipe-item.component.scss"]
 })
 export class RecipeItemComponent implements OnInit {
-  // @Input() recipe: Recipe;
-  recipe: Recipe;
-  id: number;
+  @Input() recipe: Recipe;
+  @Input() id: number;
   paramsSubscription: Subscription;
   @Output() recipeSelected = new EventEmitter<void>();
 
-  constructor(
-    private recipeService: RecipeService,
-    private route: ActivatedRoute
-  ) {}
+  constructor() // private recipeService: RecipeService,
+  // private route: ActivatedRoute
+  {}
 
-  ngOnInit() {
-    // const id = this.route.snapshot.params["id"];
-    this.paramsSubscription = this.route.params.subscribe((params: Params) => {
-      this.id = +params["id"];
-      this.recipe = this.recipeService.getRecipeById(this.id);
-    });
-  }
+  ngOnInit() {}
 }

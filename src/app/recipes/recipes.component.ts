@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { Recipe } from "../shared/recipes.model";
 import { RecipeService } from "./Recipe.service";
 import { ActivatedRoute, Params } from "@angular/router";
@@ -8,6 +8,7 @@ import { Subscription } from "rxjs";
   selector: "app-recipes",
   templateUrl: "recipes.component.html",
   styleUrls: ["recipes.component.scss"],
+  encapsulation: ViewEncapsulation.None,
   providers: [RecipeService]
 })
 export class RecipesComponent implements OnInit, OnDestroy {

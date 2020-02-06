@@ -1,7 +1,14 @@
-<app-recipe-list (recipeWasSelected)="setDisplayRecipe($event)">
-</app-recipe-list>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <app-recipe-list> </app-recipe-list>
+    </div>
+    <div class="col-6">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
 
-<router-outlet></router-outlet>
 <!-- <app-recipe-details
   *ngIf="selectedRecipe; else infoText"
   [recipe]="selectedRecipe"

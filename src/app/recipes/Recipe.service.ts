@@ -2,6 +2,7 @@ import { Recipe } from "../shared/recipes.model";
 import { EventEmitter, Injectable } from "@angular/core";
 import { Ingredient } from "../shared/ingredient.model";
 import { ShoppingService } from "../shopping-list/Shopping.service";
+import { RecipesComponent } from "./recipes.component";
 
 @Injectable()
 export class RecipeService {
@@ -28,5 +29,10 @@ export class RecipeService {
 
   addToShoppingList(ingredients: Ingredient[]) {
     this.slService.addIngredients(ingredients);
+  }
+
+  getRecipeById(id: number): Recipe {
+    if (id < this.recipes.length) return this.recipes[id];
+    else return new Recipe("Test", "Test", "Test", []);
   }
 }

@@ -1,10 +1,11 @@
 <app-recipe-list (recipeWasSelected)="setDisplayRecipe($event)">
 </app-recipe-list>
 
-<app-recipe-details
+<router-outlet></router-outlet>
+<!-- <app-recipe-details
   *ngIf="selectedRecipe; else infoText"
   [recipe]="selectedRecipe"
 ></app-recipe-details>
 <ng-template #infoText>
   <p>Please select a recipe from the list</p>
-</ng-template>
+</ng-template> -->

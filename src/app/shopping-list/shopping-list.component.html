@@ -3,11 +3,13 @@
   <hr />
   <ul
     class="list-group"
-    *ngFor="let ingredient of ingredients"
+    *ngFor="let ingredient of ingredients; let i = index"
     (ingredientAdded)="getIngredientList()"
   >
     <li class="list-group-item" style="cursor:pointer; ">
-      {{ ingredient.name }} ({{ ingredient.amount }})
+      <a (click)="onEditItem(i)"
+        >{{ ingredient.name }} ({{ ingredient.amount }})</a
+      >
     </li>
   </ul>
 </div>

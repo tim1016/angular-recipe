@@ -1,6 +1,6 @@
 <div class="row bg-light">
   <div class="col">
-    <form action="">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
         <div class="col-6">
           <button type="submit" class="btn btn-success">Save</button>
@@ -13,7 +13,12 @@
         <div class="col">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" />
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+            />
           </div>
         </div>
       </div>
@@ -22,7 +27,12 @@
         <div class="col">
           <div class="form-group">
             <label for="imagePath">Image URL</label>
-            <input type="text" class="form-control" id="imagePath" />
+            <input
+              type="text"
+              class="form-control"
+              id="imagePath"
+              formControlName="imagePath"
+            />
           </div>
         </div>
         <div class="col">
@@ -35,7 +45,7 @@
           <div class="form-group">
             <label for="description">Description</label>
             <textarea
-              name="description"
+              formControlName="description"
               id="description"
               rows="6"
               class="form-control"
@@ -44,15 +54,28 @@
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="col-8">
-          <input type="text" class="form-control" />
-        </div>
-        <div class="col-2">
-          <input class="form-control" type="number" name="" id="" />
-        </div>
-        <div class="col-2">
-          <button class="btn btn-danger">&times;</button>
+      <div formArrayName="ingredients">
+        <div
+          class="form-row mt-1"
+          *ngFor="
+            let ingredientCtrl of recipeForm.get('ingredients').controls;
+            let i = index
+          "
+          [formGroupName]="i"
+        >
+          <div class="col-6">
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+          <div class="col-3">
+            <input
+              class="form-control"
+              type="number"
+              formControlName="amount"
+            />
+          </div>
+          <div class="col-3">
+            <button class="btn btn-danger">&times;</button>
+          </div>
         </div>
       </div>
     </form>

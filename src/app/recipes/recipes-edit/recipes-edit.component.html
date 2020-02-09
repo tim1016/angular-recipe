@@ -3,7 +3,13 @@
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
         <div class="col-6">
-          <button type="submit" class="btn btn-success">Save</button>
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="!recipeForm.valid"
+          >
+            Save
+          </button>
         </div>
         <div class="col-6">
           <button type="button" class="btn btn-danger">Cancel</button>
@@ -76,6 +82,16 @@
           <div class="col-3">
             <button class="btn btn-danger">&times;</button>
           </div>
+        </div>
+        <hr />
+        <div class="form-row">
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="onAddIngredient()"
+          >
+            Add Ingredient
+          </button>
         </div>
       </div>
     </form>

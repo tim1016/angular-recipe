@@ -93,7 +93,13 @@
             />
           </div>
           <div class="col-3">
-            <button class="btn btn-danger">&times;</button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              (click)="onDeleteIngredient(i)"
+            >
+              &times;
+            </button>
           </div>
         </div>
         <hr />

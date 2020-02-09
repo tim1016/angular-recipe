@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Recipe } from "../../shared/recipes.model";
 import { RecipeService } from "../Recipe.service";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -9,7 +9,7 @@ import { Subscription } from "rxjs";
   templateUrl: "recipe-list.component.html",
   styleUrls: ["recipe-list.component.scss"]
 })
-export class RecipeListComponent {
+export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[];
   subscription: Subscription;
 
@@ -27,6 +27,9 @@ export class RecipeListComponent {
     );
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
   onNewRecipe() {
     this.router.navigate(["new"], { relativeTo: this.route });
   }

@@ -2,7 +2,7 @@
   <div class="col">
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div class="form-row">
-        <div class="col-6">
+        <div class="col-4">
           <button
             type="submit"
             class="btn btn-success"
@@ -11,8 +11,20 @@
             Save
           </button>
         </div>
-        <div class="col-6">
-          <button type="button" class="btn btn-danger">Cancel</button>
+        <div class="col-4">
+          <button type="button" class="btn btn-info" (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+        <div class="col-4">
+          <button
+            type="button"
+            class="btn btn-danger"
+            *ngIf="editMode"
+            (click)="onDelete()"
+          >
+            Delete
+          </button>
         </div>
       </div>
       <div class="form-row">
@@ -38,11 +50,12 @@
               class="form-control"
               id="imagePath"
               formControlName="imagePath"
+              #imagePath
             />
           </div>
         </div>
         <div class="col">
-          <img src="" alt="" class="img-responsive" />
+          <img [src]="imagePath.value" alt="" class="img-responsive" />
         </div>
       </div>
 

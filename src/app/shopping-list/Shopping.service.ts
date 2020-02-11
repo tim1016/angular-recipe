@@ -1,7 +1,9 @@
 import { Ingredient } from "../shared/ingredient.model";
 // import { EventEmitter, Output } from "@angular/core";
 import { Subject } from "rxjs";
+import { Injectable } from "@angular/core";
 
+@Injectable({ providedIn: "root" })
 export class ShoppingService {
   private ingredients: Ingredient[] = [
     new Ingredient("Cardamom", 1),

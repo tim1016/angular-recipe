@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { DataStorageService } from "../shared/data-storage.service";
 // import {  } from 'protractor';
 
 @Component({
@@ -10,11 +11,12 @@ export class HeaderComponent implements OnInit {
   @Output() featureSelected = new EventEmitter<string>();
   navString: string = "";
   showDropdown = false;
-  constructor() {}
+
+  constructor(private dataStorageService: DataStorageService) {}
 
   ngOnInit() {}
 
-  // onSelect = selection => {
-  //   this.featureSelected.emit(selection);
-  // };
+  onSaveData() {
+    this.dataStorageService.storeRecipes();
+  }
 }

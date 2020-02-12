@@ -1,17 +1,14 @@
-import { Ingredient } from "../shared/ingredient.model";
-// import { EventEmitter, Output } from "@angular/core";
 import { Subject } from "rxjs";
-import { Injectable } from "@angular/core";
+import { Ingredient } from "../shared/ingredient.model";
 
-@Injectable({ providedIn: "root" })
 export class ShoppingService {
+  ingredientsChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>();
+
   private ingredients: Ingredient[] = [
     new Ingredient("Cardamom", 1),
     new Ingredient("Tea", 2)
   ];
-
-  ingredientsChanged = new Subject<Ingredient[]>();
-  startedEditing = new Subject<number>();
 
   getIngredient() {
     return this.ingredients.slice();

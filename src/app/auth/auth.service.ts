@@ -5,7 +5,7 @@ import {
   HttpResponse
 } from "@angular/common/http";
 import { catchError, tap } from "rxjs/operators";
-import { throwError, Subject } from "rxjs";
+import { throwError, BehaviorSubject } from "rxjs";
 import { User } from "./user.model";
 
 export interface AuthResponseData {
@@ -24,7 +24,7 @@ export class AuthService {
   signupRoute = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`;
   signinRoute = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`;
 
-  user = new Subject<User>();
+  user = new BehaviorSubject<User>(null);
   constructor(private http: HttpClient) {}
 
   signup(email: string, password: string) {

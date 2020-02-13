@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { DataStorageService } from "../shared/data-storage.service";
-// import {  } from 'protractor';
+import { AuthService } from "../auth/auth.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-header",
@@ -8,13 +9,21 @@ import { DataStorageService } from "../shared/data-storage.service";
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit {
-  @Output() featureSelected = new EventEmitter<string>();
+  isAuthenticated = false;
   navString: string = "";
   showDropdown = false;
+  userSub: Subscription;
 
-  constructor(private dataStorageService: DataStorageService) {}
+  constructor(
+    private dataStorageService: DataStorageService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userSub = this.authService.user.subscribe(user => {
+      this.isAuthenticated = !!user;
+    });
+  }
 
   onSaveData() {
     this.dataStorageService.storeRecipes();
@@ -23,4 +32,6 @@ export class HeaderComponent implements OnInit {
   onFetchData() {
     this.dataStorageService.fetchRecipes().subscribe();
   }
+
+  ngOnDestroy() {}
 }

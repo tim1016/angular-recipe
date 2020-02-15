@@ -91,4 +91,8 @@ export class RecipesEditComponent implements OnInit {
   onDeleteIngredient(index: number) {
     (this.recipeForm.get("ingredients") as FormArray).removeAt(index);
   }
+
+  get controls() {
+    return (this.recipeForm.get("ingredients") as FormArray).controls;
+  }
 }

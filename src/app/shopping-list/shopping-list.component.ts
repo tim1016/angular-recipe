@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Ingredient } from "../shared/ingredient.model";
 import { ShoppingService } from "./Shopping.service";
 import { Subscription } from "rxjs";
+import { LoggingService } from "src/logging.service";
 
 @Component({
   selector: "app-shopping-list",
@@ -20,6 +21,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         this.ingredients = ingredients;
       }
     );
+    // this.loggingService.printLog("Hello from shopping component ngOnInit");
   }
 
   ngOnDestroy() {

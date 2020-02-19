@@ -3,9 +3,7 @@ import { Subject } from "rxjs";
 
 import { Recipe } from "../shared/recipes.model";
 import { Ingredient } from "../shared/ingredient.model";
-import { ShoppingService } from "../shopping-list/Shopping.service";
 import { Store } from "@ngrx/store";
-import { shoppingListReducer } from "../shopping-list/store/shopping-list.reducer";
 import * as ShoppingListActions from "../shopping-list/store/shopping-list.actions";
 import * as fromShoppingList from "../shopping-list/store/shopping-list.reducer";
 
@@ -14,17 +12,13 @@ export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
   private recipes: Recipe[] = [];
 
-  constructor(
-    private slService: ShoppingService,
-    private store: Store<fromShoppingList.AppState>
-  ) {}
+  constructor(private store: Store<fromShoppingList.AppState>) {}
   getRecipes() {
     return this.recipes.slice();
   }
 
   addToShoppingList(ingredients: Ingredient[]) {
     this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients));
-    // this.slService.addIngredients(ingredients);
   }
 
   getRecipeById(id: number): Recipe {

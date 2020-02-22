@@ -7,6 +7,8 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { of } from "rxjs";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { User } from "../user.model";
+import { AuthService } from "../auth.service";
 
 export interface AuthResponseData {
   kind?: string;
@@ -19,13 +21,17 @@ export interface AuthResponseData {
 }
 
 const handleAuthentication = (resData: AuthResponseData) => {
+  const { email, localId, idToken, expiresIn } = resData;
   const expirationdate = new Date(
-    new Date().getTime() + parseFloat(resData.expiresIn) * 1000
+    new Date().getTime() + parseFloat(expiresIn) * 1000
   );
+  const user = new User(email, localId, idToken, expirationdate);
+  localStorage.setItem("userData", JSON.stringify(user));
+
   return new AuthActions.AuthenticateSuccess({
-    email: resData.email,
-    userId: resData.localId,
-    token: resData.idToken,
+    email: email,
+    userId: localId,
+    token: idToken,
     expirationDate: expirationdate
   });
 };
@@ -70,7 +76,57 @@ export class AuthEffects {
           password: signupAction.payload.password,
           returnSecureToken: true
         })
-        .pipe(map(handleAuthentication), catchError(handleError));
+        .pipe(
+          tap(resData =>
+            this.authService.setLogOutTimer(+resData.expiresIn * 1000)
+          ),
+          map(handleAuthentication),
+          catchError(handleError)
+        );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  authLogout = this.actions$.pipe(
+    ofType(AuthActions.LOGOUT),
+    tap(() => {
+      localStorage.removeItem("userData");
+      this.authService.clearLogoutTimer();
+      this.router.navigate(["/auth"]);
+    })
+  );
+
+  @Effect()
+  autoLogin = this.actions$.pipe(
+    ofType(AuthActions.AUTO_LOGIN),
+    map(() => {
+      const userData: {
+        email: string;
+        id: string;
+        _token: string;
+        _expirationDate: string;
+      } = JSON.parse(localStorage.getItem("userData"));
+      if (!userData) return { type: "DUMMY" };
+
+      const loadedUser = new User(
+        userData.email,
+        userData.id,
+        userData._token,
+        new Date(userData._expirationDate)
+      );
+
+      if (loadedUser.token) {
+        const expirationDuration =
+          new Date(userData._expirationDate).getTime() - new Date().getTime();
+        this.authService.setLogOutTimer(expirationDuration);
+        return new AuthActions.AuthenticateSuccess({
+          email: userData.email,
+          userId: userData.id,
+          token: userData._token,
+          expirationDate: new Date(userData._expirationDate)
+        });
+      }
+      return { type: "DUMMY" };
     })
   );
 
@@ -84,13 +140,19 @@ export class AuthEffects {
           password: authData.payload.password,
           returnSecureToken: true
         })
-        .pipe(map(handleAuthentication), catchError(handleError));
+        .pipe(
+          tap(resData =>
+            this.authService.setLogOutTimer(+resData.expiresIn * 1000)
+          ),
+          map(handleAuthentication),
+          catchError(handleError)
+        );
     })
   );
 
   @Effect({ dispatch: false })
   authRedirect = this.actions$.pipe(
-    ofType(AuthActions.AUTHENTICATE_SUCCESS, AuthActions.LOGOUT),
+    ofType(AuthActions.AUTHENTICATE_SUCCESS),
     tap(() => {
       this.router.navigate(["/"]);
     })
@@ -98,6 +160,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 }

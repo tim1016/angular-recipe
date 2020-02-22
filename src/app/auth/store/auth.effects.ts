@@ -32,7 +32,8 @@ const handleAuthentication = (resData: AuthResponseData) => {
     email: email,
     userId: localId,
     token: idToken,
-    expirationDate: expirationdate
+    expirationDate: expirationdate,
+    redirect: true
   });
 };
 
@@ -123,7 +124,8 @@ export class AuthEffects {
           email: userData.email,
           userId: userData.id,
           token: userData._token,
-          expirationDate: new Date(userData._expirationDate)
+          expirationDate: new Date(userData._expirationDate),
+          redirect: false
         });
       }
       return { type: "DUMMY" };
@@ -153,8 +155,8 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   authRedirect = this.actions$.pipe(
     ofType(AuthActions.AUTHENTICATE_SUCCESS),
-    tap(() => {
-      this.router.navigate(["/"]);
+    tap((authSucessAction: AuthActions.AuthenticateSuccess) => {
+      if (authSucessAction.payload.redirect) this.router.navigate(["/"]);
     })
   );
   constructor(

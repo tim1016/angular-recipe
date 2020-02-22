@@ -29,6 +29,7 @@ export class AuthComponent implements OnDestroy, OnInit {
   isLoading = false;
   error: string = "";
   closeSub: Subscription;
+  storeSub: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -38,7 +39,7 @@ export class AuthComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.select("auth").subscribe(authState => {
+    this.storeSub = this.store.select("auth").subscribe(authState => {
       this.isLoading = authState.loading;
       this.error = authState.authError;
 
@@ -55,16 +56,14 @@ export class AuthComponent implements OnDestroy, OnInit {
   onSubmit(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-
-    let authObs: Observable<AuthResponseData>;
-
     if (this.isLoginMode) {
-      // authObs = this.authService.signin(email, password);
       this.store.dispatch(
         new AuthActions.LoginStart({ email: email, password: password })
       );
     } else {
-      authObs = this.authService.signup(email, password);
+      this.store.dispatch(
+        new AuthActions.SignUpStart({ email: email, password: password })
+      );
     }
 
     this.store.select("auth").subscribe(authState => {});
@@ -75,7 +74,7 @@ export class AuthComponent implements OnDestroy, OnInit {
   }
 
   onHandleError() {
-    this.error = null;
+    this.store.dispatch(new AuthActions.ClearError());
   }
 
   private showErrorAlert(message) {
@@ -97,5 +96,6 @@ export class AuthComponent implements OnDestroy, OnInit {
   }
   ngOnDestroy() {
     if (this.closeSub) this.closeSub.unsubscribe();
+    if (this.storeSub) this.storeSub.unsubscribe();
   }
 }

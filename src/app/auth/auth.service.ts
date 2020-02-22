@@ -37,45 +37,45 @@ export class AuthService {
     private store: Store<fromApp.AppState>
   ) {}
 
-  signup(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(this.signupRoute, {
-        email,
-        password,
-        returnSecureToken: true
-      })
-      .pipe(
-        catchError(this.handleError),
-        tap(responseData => {
-          this.handleAuthentication(
-            responseData.email,
-            responseData.localId,
-            responseData.idToken,
-            responseData.expiresIn
-          );
-        })
-      );
-  }
+  // signup(email: string, password: string) {
+  //   return this.http
+  //     .post<AuthResponseData>(this.signupRoute, {
+  //       email,
+  //       password,
+  //       returnSecureToken: true
+  //     })
+  //     .pipe(
+  //       catchError(this.handleError),
+  //       tap(responseData => {
+  //         this.handleAuthentication(
+  //           responseData.email,
+  //           responseData.localId,
+  //           responseData.idToken,
+  //           responseData.expiresIn
+  //         );
+  //       })
+  //     );
+  // }
 
-  signin(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(this.signinRoute, {
-        email,
-        password,
-        returnSecureToken: true
-      })
-      .pipe(
-        catchError(this.handleError),
-        tap(responseData => {
-          this.handleAuthentication(
-            responseData.email,
-            responseData.localId,
-            responseData.idToken,
-            responseData.expiresIn
-          );
-        })
-      );
-  }
+  // signin(email: string, password: string) {
+  //   return this.http
+  //     .post<AuthResponseData>(this.signinRoute, {
+  //       email,
+  //       password,
+  //       returnSecureToken: true
+  //     })
+  //     .pipe(
+  //       catchError(this.handleError),
+  //       tap(responseData => {
+  //         this.handleAuthentication(
+  //           responseData.email,
+  //           responseData.localId,
+  //           responseData.idToken,
+  //           responseData.expiresIn
+  //         );
+  //       })
+  //     );
+  // }
 
   logout() {
     this.store.dispatch(new authActions.Logout());
@@ -104,7 +104,7 @@ export class AuthService {
 
     if (loadedUser.token) {
       this.store.dispatch(
-        new authActions.Login({
+        new authActions.AuthenticateSuccess({
           email: userData.email,
           userId: userData.id,
           token: userData._token,
@@ -124,50 +124,50 @@ export class AuthService {
     }, expirationDuration);
   }
 
-  private handleAuthentication(
-    email: string,
-    id: string,
-    token: string,
-    expiresIn: string
-  ) {
-    const expirationdate = new Date(
-      new Date().getTime() + parseFloat(expiresIn) * 1000
-    );
-    const user = new User(email, id, token, expirationdate);
-    this.store.dispatch(
-      new authActions.Login({
-        email: email,
-        userId: id,
-        token: token,
-        expirationDate: expirationdate
-      })
-    );
-    this.autoLogout(+expiresIn * 1000);
-    localStorage.setItem("userData", JSON.stringify(user));
-  }
+  // private handleAuthentication(
+  //   email: string,
+  //   id: string,
+  //   token: string,
+  //   expiresIn: string
+  // ) {
+  //   const expirationdate = new Date(
+  //     new Date().getTime() + parseFloat(expiresIn) * 1000
+  //   );
+  //   const user = new User(email, id, token, expirationdate);
+  //   this.store.dispatch(
+  //     new authActions.AuthenticateSuccess({
+  //       email: email,
+  //       userId: id,
+  //       token: token,
+  //       expirationDate: expirationdate
+  //     })
+  //   );
+  //   this.autoLogout(+expiresIn * 1000);
+  //   localStorage.setItem("userData", JSON.stringify(user));
+  // }
 
-  private handleError(errorResponse: HttpErrorResponse) {
-    console.log(errorResponse);
-    let errorMessage = "An unknown error took place";
-    if (!errorResponse.error || !errorResponse.error.error) {
-      return throwError(errorMessage);
-    }
-    switch (errorResponse.error.error.message) {
-      case "EMAIL_EXISTS":
-        errorMessage = "This email already exists.";
-        break;
-      case "INVALID_PASSWORD":
-        errorMessage = "The password is incorrect";
-        break;
-      case "EMAIL_NOT_FOUND":
-        errorMessage = "There is no user record corresponding to this email";
-        break;
-      case "USER_DISABLED":
-        errorMessage = "This account has been disabled";
-        break;
-      default:
-        break;
-    }
-    return throwError(errorMessage);
-  }
+  // private handleError(errorResponse: HttpErrorResponse) {
+  //   console.log(errorResponse);
+  //   let errorMessage = "An unknown error took place";
+  //   if (!errorResponse.error || !errorResponse.error.error) {
+  //     return throwError(errorMessage);
+  //   }
+  //   switch (errorResponse.error.error.message) {
+  //     case "EMAIL_EXISTS":
+  //       errorMessage = "This email already exists.";
+  //       break;
+  //     case "INVALID_PASSWORD":
+  //       errorMessage = "The password is incorrect";
+  //       break;
+  //     case "EMAIL_NOT_FOUND":
+  //       errorMessage = "There is no user record corresponding to this email";
+  //       break;
+  //     case "USER_DISABLED":
+  //       errorMessage = "This account has been disabled";
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   return throwError(errorMessage);
+  // }
 }

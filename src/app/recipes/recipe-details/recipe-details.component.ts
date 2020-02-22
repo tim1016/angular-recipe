@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Recipe } from "../../shared/recipes.model";
-import { RecipeService } from "../Recipe.service";
+
 import { Params, ActivatedRoute, Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import * as fromApp from "../../store/app.reducer";
 import { map, switchMap } from "rxjs/operators";
 import * as RecipesActions from "../store/recipe.actions";
+import * as ShoppingListActions from "../../shopping-list/store/shopping-list.actions";
 
 @Component({
   selector: "app-recipe-details",
@@ -18,7 +19,6 @@ export class RecipeDetailsComponent implements OnInit {
   showDropdown = false;
   paramsSubscription: Params;
   constructor(
-    private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<fromApp.AppState>
@@ -61,7 +61,9 @@ export class RecipeDetailsComponent implements OnInit {
     // );
   }
   toShoppingList() {
-    this.recipeService.addToShoppingList(this.recipe.ingredients);
+    this.store.dispatch(
+      new ShoppingListActions.AddIngredients(this.recipe.ingredients)
+    );
   }
 
   onEditRecipe() {

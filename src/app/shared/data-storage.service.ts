@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Recipe } from "./recipes.model";
-import { RecipeService } from "../recipes/Recipe.service";
 import { map, tap, take, exhaustMap } from "rxjs/operators";
 import * as fromApp from "../store/app.reducer";
 import * as RecipesActions from "../recipes/store/recipe.actions";
@@ -13,18 +12,17 @@ export class DataStorageService {
 
   constructor(
     private http: HttpClient,
-    private recipeService: RecipeService,
     private store: Store<fromApp.AppState>
   ) {}
 
-  storeRecipes() {
-    const recipes: Recipe[] = this.recipeService.getRecipes();
-    this.http
-      .put(this.domainUrl + "recipes.json", recipes)
-      .subscribe(responsedata => {
-        console.log(responsedata);
-      });
-  }
+  // storeRecipes() {
+  //   const recipes: Recipe[] = this.recipeService.getRecipes();
+  //   this.http
+  //     .put(this.domainUrl + "recipes.json", recipes)
+  //     .subscribe(responsedata => {
+  //       console.log(responsedata);
+  //     });
+  // }
 
   fetchRecipes() {
     return this.store.select("auth").pipe(

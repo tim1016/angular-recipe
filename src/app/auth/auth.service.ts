@@ -78,7 +78,6 @@ export class AuthService {
   }
 
   logout() {
-    // this.user.next(null);
     this.store.dispatch(new authActions.Logout());
     this.router.navigate(["/auth"]);
     localStorage.removeItem("userData");
@@ -143,7 +142,6 @@ export class AuthService {
         expirationDate: expirationdate
       })
     );
-    // this.user.next(user);
     this.autoLogout(+expiresIn * 1000);
     localStorage.setItem("userData", JSON.stringify(user));
   }

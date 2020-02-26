@@ -20,7 +20,7 @@ import { Store } from "@ngrx/store";
   styleUrls: ["auth.component.css"]
 })
 export class AuthComponent implements OnDestroy, OnInit {
-  @ViewChild(PlaceholderDirective, { static: false })
+  @ViewChild(PlaceholderDirective)
   alertHost: PlaceholderDirective;
 
   isLoginMode = true;
